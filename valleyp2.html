@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/aa7a31f950.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer src="logic.js"></script>
+
+    <!-- Обертка -->
+    <style>
+      .wrapper {
+        min-height: calc(100vh - 15px);
+        margin: 15px auto 0;
+      }
+    </style>
+
+    <title>LogicPart</title>
+  </head>
+
+
+
+  <body>
+    <!-- Контейнер для всего содержимого -->
+    <div class="container-fluid wrapper">
+
+
+      <!-- Верхнее меню управления -->
+      <nav class="navbar navbar-light bg-light">
+
+        <!-- Заголовок -->
+        <h1>MyToDoList</h1>
+
+        <!-- Кнопки сортировки -->
+        <div class="d-flex">
+          <button type="button" class="btn btn-primary mx-2">
+            <i class="fas fa-sort-numeric-up-alt"></i>
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-sort-numeric-up"></i>
+          </button>
+        </div>
+
+        <!-- Кнопки управления -->
+        <div class="d-flex">
+          <!-- Кнопка добавления -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >
+            <i class="fas fa-plus"></i>
+            Add task
+          </button>
+          <!-- Кнопка настроек -->
+          <div class="dropdown ml-2">
+            <button
+              class="btn btn-primary"
+              type="button"
+              id="dropdownMenuSettings"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-cog"></i>
+            </button>
+            <div
+              class="dropdown-menu p-2 dropdown-menu-right"
+              aria-labelledby="dropdownMenuSettings"
+            >
+              You should add settings here
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- Задачи -->
+      <div class="row justify-content-center">
+        <!-- Внутренний контейнер -->
+        <div class="col-10">
+
+          <!-- Заголовок текущих -->
+          <h3 class="my-2">ToDo</h3>
+          <!-- Список текущих -->
+          <ul
+            class="list-group flex-wrap justify-content-between"
+            id="currentTasks"
+          >
+            <!-- Задача -->
+            <li class="list-group-item d-flex w-100 mb-2">
+              <!-- Содержимое задачи -->
+              <div class="w-100 mr-2">
+                <!-- Шапка задачи -->
+                <div class="d-flex w-100 justify-content-between">
+                  <!-- Название задачи -->
+                  <h5 class="mb-1">Title</h5>
+                  <!-- Приоритет и дата -->
+                  <div>
+                    <small class="mr-2">High priority</small>
+                    <small>11:00 01.01.2000</small>
+                  </div>
+                </div>
+                <!-- Текст задачи -->
+                <p class="mb-1 w-100">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Adipisci aliquid eaque eligendi error eveniet nostrum nulla
+                  pariatur repudiandae, veniam. Provident.
+                </p>
+              </div>
+              <!-- Управление задачи -->
+              <div class="dropdown m-2 dropleft">
+                <!-- Основная кнопка -->
+                <button
+                  class="btn btn-secondary h-100"
+                  type="button"
+                  id="dropdownMenuItem1"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <!-- Появляющиеся кнопки управления -->
+                <div
+                  class="dropdown-menu p-2 flex-column"
+                  aria-labelledby="dropdownMenuItem1"
+                >
+                  <button type="button" class="btn btn-success w-100">
+                    Complete
+                  </button>
+                  <button type="button" class="btn btn-info w-100 my-2">
+                    Edit
+                  </button>
+                  <button type="button" class="btn btn-danger w-100">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <hr />
+
+          <!-- Заголовок выполненых -->
+          <h3 class="my-2">Comleted</h3>
+          <!-- Список выполненых -->
+          <ul
+            class="list-group flex-wrap justify-content-between"
+            id="completedTasks"
+          ></ul>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+    <!-- Modal container -->
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- Окно добавления -->
+        <div class="modal-content">
+
+          <!-- Заголовок добавления -->
+          <div class="modal-header">
+            <!-- Текст заголовка -->
+            <h5 class="modal-title" id="exampleModalLabel">Add task</h5>
+            <!-- Кнопка закрытия -->
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <!-- Тело добавления -->
+          <div class="modal-body">
+            <!-- Форма заполнения -->
+            <form id="addTask">
+              <!-- Поле названия задачи -->
+              <div class="form-group row">
+                <label for="inputTitle" class="col-sm-2 col-form-label"
+                  >Title</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputTitle"
+                    placeholder="Title"
+                    required
+                  />
+                </div>
+              </div>
+              <!-- Поле текста задачи -->
+              <div class="form-group row">
+                <label for="inputText" class="col-sm-2 col-form-label"
+                  >Text</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputText"
+                    placeholder="Text"
+                    required
+                  />
+                </div>
+              </div>
+              <!-- Выбор приоритета -->
+              <fieldset class="form-group" id="priority">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">Priority</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="Low"
+                        value="Low"
+                        required
+                      />
+                      <label class="form-check-label" for="Low"> Low </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="Medium"
+                        value="Medium"
+                      />
+                      <label class="form-check-label" for="Medium">
+                        Medium
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="High"
+                        value="High"
+                      />
+                      <label class="form-check-label" for="High"> High </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <!-- Кнопки управления  -->
+              <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                  <!-- Кнопка закрытия -->
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <!-- Кнопка добавления -->
+                  <button type="submit" class="btn btn-primary">
+                    Add task
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
