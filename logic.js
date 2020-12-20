@@ -5,8 +5,8 @@ let text;
 let priority;
 
 addTask.onsubmit = function () {
-    document.querySelector('#inputTitle').value;
-    document.querySelector('#inputText').value;
+    title = document.querySelector('#inputTitle').value;
+    text = document.querySelector('#inputText').value;
     
     console.log('hi');
 };
