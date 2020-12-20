@@ -1,5 +1,5 @@
 let addForm = document.querySelector('#addTaskForm');
-let addTaskButton = document.querySelector("#addTaskForm");
+let addTaskButton = document.querySelector("#addTaskButton");
 
 let title;
 let text;
