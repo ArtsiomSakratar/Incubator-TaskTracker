@@ -1,14 +1,4 @@
-/* CLASSES */
-
-class Task {
-  constructor(data) {
-    this.title = data.title;
-    this.text = data.text;
-    this.priority = data.priority;
-  }
-}
-
-/* MAIN */
+import Task from './Task.js';
 
 let addTaskForm = document.querySelector("#addTaskForm");
 
@@ -17,7 +7,7 @@ addTaskForm.onsubmit = function () {
   let text = document.querySelector("#inputText").value;
   let radios = document.querySelectorAll(".form-check-input");
 
-  let priority; 
+  let priority;
   for (const radio of radios) {
     if (radio.checked) {
       priority = radio.value;
