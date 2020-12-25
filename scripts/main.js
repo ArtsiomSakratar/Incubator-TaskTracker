@@ -1,6 +1,10 @@
-import Task from './Task.js';
+import Task from "./Task.js";
 
 let addTaskForm = document.querySelector("#addTaskForm");
+
+let test = new Task();
+test.title = 'tes2';
+console.log(test);
 
 addTaskForm.onsubmit = function () {
   let title = document.querySelector("#inputTitle").value;
