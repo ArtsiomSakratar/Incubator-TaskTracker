@@ -2,10 +2,6 @@ import Task from "./Task.js";
 
 let addTaskForm = document.querySelector("#addTaskForm");
 
-let test = new Task();
-test.title = 'tes2';
-console.log(test);
-
 addTaskForm.onsubmit = function () {
   let title = document.querySelector("#inputTitle").value;
   let text = document.querySelector("#inputText").value;
@@ -42,7 +38,7 @@ function addTask(task) {
 }
 
 function printTask(key) {
-  taskData = JSON.parse(localStorage.getItem(key));
+  let taskData = JSON.parse(localStorage.getItem(key));
 
   let toDoList = document.querySelector("#currentTasks");
 
