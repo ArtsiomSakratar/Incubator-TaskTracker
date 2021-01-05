@@ -23,11 +23,15 @@ export default class TaskTracker {
     return { title, text, priority };
   }
 
-  saveTask() {
+  saveTask(addMode, key) {
     let taskFormData = this.getUserInput();
     let task = new Task(taskFormData);
-
-    this.tasks.push(task);
+    
+    if (addMode == "Edit task") {
+      this.tasks[key] = task;
+    } else {
+      this.tasks.push(task);
+    }
 
     let tasksData = JSON.stringify(this.tasks);
     localStorage.setItem("tasks", tasksData);
@@ -40,10 +44,17 @@ export default class TaskTracker {
   }
 
   printTask(task) {
-    let toDoList = document.querySelector("#currentTasks");
+    let currentTasks = document.querySelector("#currentTasks");
+    let completedTasks = document.querySelector("#completedTasks");
 
     let createdTask = this.createTask(task);
-    toDoList.append(createdTask);
+
+    if (task.status) {
+      completedTasks.append(createdTask);
+    } else {
+      currentTasks.append(createdTask);
+    }
+    
   }
 
   createTask(task) {
@@ -53,7 +64,7 @@ export default class TaskTracker {
     let createdTaskContent = this.creatTaskContent(task);
     newTask.append(createdTaskContent);
 
-    let createdTaskMenuButton = this.createTaskMenuButton();
+    let createdTaskMenuButton = this.createTaskMenuButton(task);
     newTask.append(createdTaskMenuButton);
 
     return newTask;
@@ -80,15 +91,17 @@ export default class TaskTracker {
     return taskContent;
   }
 
-  createTaskMenuButton() {
+  createTaskMenuButton(task) {
     let taskMenuButton = document.createElement("div");
     taskMenuButton.classList.add("dropdown", "m-2", "dropleft");
+
+    let display = task.status ? `style="display: none;"` : ``;
 
     taskMenuButton.innerHTML = `
                 <button
                   class="btn btn-secondary h-100"
                   type="button"
-                  id="dropdownMenuItem1"
+                  id="${task.id}"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
@@ -98,12 +111,12 @@ export default class TaskTracker {
                 
                 <div
                   class="dropdown-menu p-2 flex-column"
-                  aria-labelledby="dropdownMenuItem1"
+                  aria-labelledby="${task.id}"
                 >
-                  <button type="button" class="btn btn-success w-100">
+                  <button type="button" class="btn btn-success w-100" ${display}>
                     Complete
                   </button>
-                  <button type="button" class="btn btn-info w-100 my-2">
+                  <button type="button" class="btn btn-info w-100 my-2" ${display}>
                     Edit
                   </button>
                   <button type="button" class="btn btn-danger w-100">
@@ -111,6 +124,66 @@ export default class TaskTracker {
                   </button>
                 </div>`;
 
+    
+    
     return taskMenuButton;
+  }
+
+  completeTask(id) {
+    for (const key in this.tasks) {
+      if (this.tasks[key].id == id) {
+        this.tasks[key].status = true;
+        break;
+      }
+    }
+    let tasksData = JSON.stringify(this.tasks);
+    localStorage.setItem("tasks", tasksData);
+    document.location.reload();
+  }
+
+  prepareForTaskEdit(id) {
+    let title = document.querySelector("#inputTitle");
+    let text = document.querySelector("#inputText");
+    let radios = document.querySelectorAll(".form-check-input");
+
+    let addTaskButton = document.querySelector("#addTaskButton");
+    addTaskButton.click();
+
+    let key;
+    for (key in this.tasks) {
+      if (this.tasks[key].id == id) {
+        break;
+      }
+    }
+
+    document.querySelector("#exampleModalLabel").innerHTML = "Edit task";
+
+    title.value = this.tasks[key].title;
+    text.value = this.tasks[key].text;
+
+    for (const radio of radios) {
+      if (radio.value == this.tasks[key].priority) {
+        radio.checked = true;
+        break;
+      }
+    }
+
+    let closeTaskButton = document.querySelector("#closeTaskButton");
+    let saveTaskButton = document.querySelector("#saveTaskButton");
+    saveTaskButton.innerHTML = "OK";
+
+    return key;
+  }
+
+  deleteTask(id) {
+    for (const key in this.tasks) {
+      if (this.tasks[key].id == id) {
+        this.tasks.splice(key, 1);
+        break;
+      }
+    }
+    let tasksData = JSON.stringify(this.tasks);
+    localStorage.setItem("tasks", tasksData);
+    document.location.reload();
   }
 }
