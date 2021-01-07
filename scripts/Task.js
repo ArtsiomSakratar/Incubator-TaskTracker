@@ -9,15 +9,23 @@ export default class Task {
 
     this.time = this.getTime();
     this.date = this.getDate();
+
+    this.timestamp = this.getTimestamp();
   }
 
   getTime() {
     let now = new Date();
-    return now.getHours() + ":" + now.getMinutes();
+    let nowMinutes = now.getMinutes() < 10 ? "0" + now.getMinutes() : now.getMinutes();
+    return now.getHours() + ":" + nowMinutes;
   }
   
   getDate() {
     let now = new Date();
-    return now.getDate() + "." + now.getMonth() + "." + now.getFullYear();
+    return now.getDate() + "." + now.getMonth()+1 + "." + now.getFullYear();
+  }
+
+  getTimestamp() {
+    let date = new Date();
+    return date.getTime();
   }
 }

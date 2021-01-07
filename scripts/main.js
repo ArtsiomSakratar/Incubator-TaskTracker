@@ -5,6 +5,16 @@ let taskTracker = new TaskTracker(localStorage.getItem("tasks"));
 taskTracker.printTasks();
 // localStorage.clear();
 
+let altSortButton = document.querySelector("#altSort");
+altSortButton.onclick = function () {
+  taskTracker.sortTasks('alt');
+};
+
+let sortButton = document.querySelector("#sort");
+sortButton.onclick = function () {
+  taskTracker.sortTasks();
+};
+
 let completeTaskButtons = document.querySelectorAll(".btn-success");
 for (const completeButton of completeTaskButtons) {
   completeButton.onclick = function () {
@@ -35,3 +45,7 @@ addTaskForm.onsubmit = function () {
   let addMode = document.querySelector("#exampleModalLabel").innerHTML;
   taskTracker.saveTask(addMode, key);
 };
+
+document.querySelector("#addTaskButton").onclick = function () {
+  taskTracker.clearForm();
+}

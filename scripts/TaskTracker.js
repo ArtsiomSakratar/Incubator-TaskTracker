@@ -61,6 +61,12 @@ export default class TaskTracker {
     let newTask = document.createElement("li");
     newTask.classList.add("list-group-item", "d-flex", "w-100", "mb-2");
 
+    let color = "green";
+    if (task.priority == "Medium") color = "yellow";
+    else if (task.priority == "High") color = "red";
+
+    newTask.style.backgroundColor = color;
+
     let createdTaskContent = this.creatTaskContent(task);
     newTask.append(createdTaskContent);
 
@@ -168,7 +174,6 @@ export default class TaskTracker {
       }
     }
 
-    let closeTaskButton = document.querySelector("#closeTaskButton");
     let saveTaskButton = document.querySelector("#saveTaskButton");
     saveTaskButton.innerHTML = "OK";
 
@@ -185,5 +190,35 @@ export default class TaskTracker {
     let tasksData = JSON.stringify(this.tasks);
     localStorage.setItem("tasks", tasksData);
     document.location.reload();
+  }
+
+  sortTasks(mode) {
+    if (mode == 'alt') {
+      this.tasks.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1));
+    } else {
+      this.tasks.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
+    }
+
+    let tasksData = JSON.stringify(this.tasks);
+    localStorage.setItem("tasks", tasksData);
+    document.location.reload();
+  }
+
+  clearForm() {
+    let title = document.querySelector("#inputTitle");
+    let text = document.querySelector("#inputText");
+    let radios = document.querySelectorAll(".form-check-input");
+
+    document.querySelector("#exampleModalLabel").innerHTML = "Add task";
+
+    title.value = "";
+    text.value = "";
+
+    for (const radio of radios) {
+      radio.checked = false;
+    }
+
+    let saveTaskButton = document.querySelector("#saveTaskButton");
+    saveTaskButton.innerHTML = "Add task";
   }
 }
