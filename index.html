@@ -88,6 +88,14 @@
                 </label>
                 <i class="fas fa-moon mode" style="margin-left: 10px;"></i>
               </div>
+              <!-- <div style="display: flex; justify-content: center;">
+                <i class="fas fa-sun mode" style="margin-right: 10px;"></i>
+                <label class="switch">
+                  <input type="checkbox" id="langSwitch"/>
+                  <span class="slider round"></span>
+                </label>
+                <i class="fas fa-moon mode" style="margin-left: 10px;"></i>
+              </div> -->
             </div>
           </div>
         </div>
@@ -98,7 +106,7 @@
         <!-- Внутренний контейнер -->
         <div class="col-10">
           <!-- Заголовок текущих -->
-          <h3 class="my-2">ToDo</h3>
+          <h3 class="my-2" id="todo">ToDo</h3>
           <!-- Список текущих -->
           <ul
             class="list-group flex-wrap justify-content-between"
@@ -109,7 +117,7 @@
           <hr />
 
           <!-- Заголовок выполненых -->
-          <h3 class="my-2">Comleted</h3>
+          <h3 class="my-2" id="completed">Comleted</h3>
           <!-- Список выполненых -->
           <ul
             class="list-group flex-wrap justify-content-between"

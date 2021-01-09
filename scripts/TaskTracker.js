@@ -3,6 +3,9 @@ import Task from "./Task.js";
 export default class TaskTracker {
   tasks = [];
 
+  currentCount = 0;
+  completedCount = 0;
+
   constructor(tasksData) {
     if (tasksData) this.tasks = JSON.parse(tasksData);
   }
@@ -69,6 +72,9 @@ export default class TaskTracker {
     for (const task of this.tasks) {
       this.printTask(task);
     }
+
+    document.querySelector("#todo").innerHTML = `ToDo (${this.currentCount})`;
+    document.querySelector("#completed").innerHTML = `Completed (${this.completedCount})`;
   }
 
   printTask(task) {
@@ -79,8 +85,10 @@ export default class TaskTracker {
 
     if (task.status) {
       completedTasks.append(createdTask);
+      this.completedCount++;
     } else {
       currentTasks.append(createdTask);
+      this.currentCount++;
     }
   }
 
