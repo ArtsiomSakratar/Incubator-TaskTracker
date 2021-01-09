@@ -3,6 +3,7 @@ import Task from "./Task.js";
 
 let taskTracker = new TaskTracker(localStorage.getItem("tasks"));
 taskTracker.printTasks();
+taskTracker.loadTheme();
 // localStorage.clear();
 
 let altSortButton = document.querySelector("#altSort");
@@ -13,6 +14,11 @@ altSortButton.onclick = function () {
 let sortButton = document.querySelector("#sort");
 sortButton.onclick = function () {
   taskTracker.sortTasks();
+};
+
+let themeButton = document.querySelector("#themeSwitch");
+themeButton.onclick = function () {
+  taskTracker.changeTheme();
 };
 
 let completeTaskButtons = document.querySelectorAll(".btn-success");
@@ -49,3 +55,4 @@ addTaskForm.onsubmit = function () {
 document.querySelector("#addTaskButton").onclick = function () {
   taskTracker.clearForm();
 }
+

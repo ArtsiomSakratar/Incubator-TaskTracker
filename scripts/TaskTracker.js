@@ -7,6 +7,34 @@ export default class TaskTracker {
     if (tasksData) this.tasks = JSON.parse(tasksData);
   }
 
+  changeTheme() {
+    let theme = localStorage.getItem("theme");
+
+    if (theme == "dark") {
+      localStorage.setItem("theme", "light");
+    } else {
+      localStorage.setItem("theme", "dark");
+    }
+
+    document.location.reload();
+  }
+
+  loadTheme() {
+    let theme = localStorage.getItem('theme');
+    let head = document.querySelector("head");
+    let darkLink = document.createElement("link");
+
+    if (theme == "dark") {
+      darkLink.rel = "stylesheet";
+      darkLink.href = "styles/dark.css";
+
+
+      head.append(darkLink);
+      document.querySelector("#themeSwitch").checked = true;
+    } 
+    
+  }
+
   getUserInput() {
     let title = document.querySelector("#inputTitle").value;
     let text = document.querySelector("#inputText").value;
@@ -26,7 +54,7 @@ export default class TaskTracker {
   saveTask(addMode, key) {
     let taskFormData = this.getUserInput();
     let task = new Task(taskFormData);
-    
+
     if (addMode == "Edit task") {
       this.tasks[key] = task;
     } else {
@@ -54,7 +82,6 @@ export default class TaskTracker {
     } else {
       currentTasks.append(createdTask);
     }
-    
   }
 
   createTask(task) {
@@ -62,8 +89,8 @@ export default class TaskTracker {
     newTask.classList.add("list-group-item", "d-flex", "w-100", "mb-2");
 
     let color = "green";
-    if (task.priority == "Medium") color = "yellow";
-    else if (task.priority == "High") color = "red";
+    if (task.priority == "Medium") color = "#FFBC2D";
+    else if (task.priority == "High") color = "#FF0000";
 
     newTask.style.backgroundColor = color;
 
@@ -130,8 +157,6 @@ export default class TaskTracker {
                   </button>
                 </div>`;
 
-    
-    
     return taskMenuButton;
   }
 
@@ -193,7 +218,7 @@ export default class TaskTracker {
   }
 
   sortTasks(mode) {
-    if (mode == 'alt') {
+    if (mode == "alt") {
       this.tasks.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1));
     } else {
       this.tasks.sort((a, b) => (a.timestamp > b.timestamp ? 1 : -1));
