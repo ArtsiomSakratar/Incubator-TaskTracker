@@ -88,14 +88,14 @@
                 </label>
                 <i class="fas fa-moon mode" style="margin-left: 10px;"></i>
               </div>
-              <!-- <div style="display: flex; justify-content: center;">
-                <i class="fas fa-sun mode" style="margin-right: 10px;"></i>
+              <div style="display: flex; justify-content: center;">
+                <span class="lang" style="margin-right: 10px;">EN</span>
                 <label class="switch">
                   <input type="checkbox" id="langSwitch"/>
                   <span class="slider round"></span>
                 </label>
-                <i class="fas fa-moon mode" style="margin-left: 10px;"></i>
-              </div> -->
+                <span class="lang" style="margin-left: 10px;">RU</span>
+              </div>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@
             <form id="addTaskForm">
               <!-- Поле названия задачи -->
               <div class="form-group row">
-                <label for="inputTitle" class="col-sm-2 col-form-label"
+                <label for="inputTitle" id="formTitle" class="col-sm-2 col-form-label"
                   >Title</label
                 >
                 <div class="col-sm-10">
@@ -177,7 +177,7 @@
               </div>
               <!-- Поле текста задачи -->
               <div class="form-group row">
-                <label for="inputText" class="col-sm-2 col-form-label"
+                <label for="inputText" id="formText" class="col-sm-2 col-form-label"
                   >Text</label
                 >
                 <div class="col-sm-10">
@@ -194,7 +194,7 @@
               <!-- Выбор приоритета -->
               <fieldset class="form-group" id="priority">
                 <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0">Priority</legend>
+                  <legend id="formPriority" class="col-form-label col-sm-2 pt-0">Priority</legend>
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
@@ -205,7 +205,7 @@
                         value="Low"
                         required
                       />
-                      <label class="form-check-label" for="Low"> Low </label>
+                      <label id="formLow" class="form-check-label" for="Low"> Low </label>
                     </div>
                     <div class="form-check">
                       <input
@@ -215,7 +215,7 @@
                         id="Medium"
                         value="Medium"
                       />
-                      <label class="form-check-label" for="Medium">
+                      <label id="formMedium" class="form-check-label" for="Medium">
                         Medium
                       </label>
                     </div>
@@ -227,7 +227,7 @@
                         id="High"
                         value="High"
                       />
-                      <label class="form-check-label" for="High"> High </label>
+                      <label id="formHigh" class="form-check-label" for="High"> High </label>
                     </div>
                   </div>
                 </div>

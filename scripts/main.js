@@ -4,6 +4,7 @@ import Task from "./Task.js";
 let taskTracker = new TaskTracker(localStorage.getItem("tasks"));
 taskTracker.printTasks();
 taskTracker.loadTheme();
+taskTracker.loadLang();
 // localStorage.clear();
 
 let altSortButton = document.querySelector("#altSort");
@@ -19,6 +20,11 @@ sortButton.onclick = function () {
 let themeButton = document.querySelector("#themeSwitch");
 themeButton.onclick = function () {
   taskTracker.changeTheme();
+};
+
+let langButton = document.querySelector("#langSwitch");
+langButton.onclick = function () {
+  taskTracker.changeLang();
 };
 
 let completeTaskButtons = document.querySelectorAll(".btn-success");

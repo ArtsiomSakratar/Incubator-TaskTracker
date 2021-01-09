@@ -22,20 +22,69 @@ export default class TaskTracker {
     document.location.reload();
   }
 
+  changeLang() {
+    let lang = localStorage.getItem("lang");
+
+    if (lang == "ru") {
+      localStorage.setItem("lang", "eng");
+    } else {
+      localStorage.setItem("lang", "ru");
+    }
+
+    document.location.reload();
+  }
+
   loadTheme() {
     let theme = localStorage.getItem('theme');
-    let head = document.querySelector("head");
-    let darkLink = document.createElement("link");
-
     if (theme == "dark") {
+      let head = document.querySelector("head");
+      let darkLink = document.createElement("link");
+
       darkLink.rel = "stylesheet";
       darkLink.href = "styles/dark.css";
-
 
       head.append(darkLink);
       document.querySelector("#themeSwitch").checked = true;
     } 
     
+  }
+
+  loadLang() {
+    let lang = localStorage.getItem("lang");
+
+    if (lang == "ru") {
+      document.querySelector("h1").innerHTML = "Мой список задач";
+      document.querySelector("#addTaskButton").innerHTML = `<i class="fas fa-plus"></i>
+            Новая Задача`;
+      document.querySelector("#todo").innerHTML = `Сделать (${this.currentCount})`;
+      document.querySelector("#completed").innerHTML = `Выполненные (${this.completedCount})`;
+
+      let tasksPriority = document.querySelectorAll("#tasksPriority");
+      for (const priority of tasksPriority) {
+        if (priority.innerHTML == "Low") priority.innerHTML = "Низкий";
+        else if (priority.innerHTML == "Medium") priority.innerHTML = "Средний";
+        else priority.innerHTML = "Высокий";
+      }
+      
+      let menuButtons = document.querySelectorAll("#menuButton");
+      for (const button of menuButtons) {
+        if (button.innerHTML.includes("Complete")) button.innerHTML = "Завершить";
+        else if (button.innerHTML.includes("Edit")) button.innerHTML = "Редактировать";
+        else button.innerHTML = "Удалить";
+      }
+      
+      document.querySelector("#formTitle").innerHTML = "Название";
+      document.querySelector("#inputTitle").placeholder = "Название";
+      document.querySelector("#formText").innerHTML = "Текст";
+      document.querySelector("#inputText").placeholder = "Текст";
+      document.querySelector("#formPriority").innerHTML = "Приорити";
+      document.querySelector("#formLow").innerHTML = "Низкий";
+      document.querySelector("#formMedium").innerHTML = "Средний";
+      document.querySelector("#formHigh").innerHTML = "Высокий";
+      document.querySelector("#closeTaskButton").innerHTML = "Закрыть";
+
+      document.querySelector("#langSwitch").checked = true;
+    }
   }
 
   getUserInput() {
@@ -120,7 +169,7 @@ export default class TaskTracker {
                   <h5 class="mb-1">${task.title}</h5>
                   <!-- Приоритет и дата -->
                   <div>
-                    <small class="mr-2">${task.priority}</small>
+                    <small class="mr-2" id="tasksPriority">${task.priority}</small>
                     <small>${task.time} ${task.date}</small>
                   </div>
                 </div>
@@ -154,13 +203,13 @@ export default class TaskTracker {
                   class="dropdown-menu p-2 flex-column"
                   aria-labelledby="${task.id}"
                 >
-                  <button type="button" class="btn btn-success w-100" ${display}>
+                  <button type="button" id="menuButton" class="btn btn-success w-100" ${display}>
                     Complete
                   </button>
-                  <button type="button" class="btn btn-info w-100 my-2" ${display}>
+                  <button type="button" id="menuButton" class="btn btn-info w-100 my-2" ${display}>
                     Edit
                   </button>
-                  <button type="button" class="btn btn-danger w-100">
+                  <button type="button" id="menuButton" class="btn btn-danger w-100">
                     Delete
                   </button>
                 </div>`;
@@ -195,7 +244,10 @@ export default class TaskTracker {
       }
     }
 
-    document.querySelector("#exampleModalLabel").innerHTML = "Edit task";
+    if (localStorage.getItem("lang") == "ru")
+      document.querySelector("#exampleModalLabel").innerHTML =
+        "Редактирование задачи";
+    else document.querySelector("#exampleModalLabel").innerHTML = "Edit task";
 
     title.value = this.tasks[key].title;
     text.value = this.tasks[key].text;
@@ -241,8 +293,17 @@ export default class TaskTracker {
     let title = document.querySelector("#inputTitle");
     let text = document.querySelector("#inputText");
     let radios = document.querySelectorAll(".form-check-input");
+    let saveTaskButton = document.querySelector("#saveTaskButton");
 
-    document.querySelector("#exampleModalLabel").innerHTML = "Add task";
+    if (localStorage.getItem("lang") == "ru") {
+      document.querySelector("#exampleModalLabel").innerHTML =
+        "Добавление задачи";
+      saveTaskButton.innerHTML = "Добавить";
+    }
+    else {
+      document.querySelector("#exampleModalLabel").innerHTML = "Add task";
+      saveTaskButton.innerHTML = "Add task";
+    }
 
     title.value = "";
     text.value = "";
@@ -250,8 +311,6 @@ export default class TaskTracker {
     for (const radio of radios) {
       radio.checked = false;
     }
-
-    let saveTaskButton = document.querySelector("#saveTaskButton");
-    saveTaskButton.innerHTML = "Add task";
   }
+
 }
