@@ -143,7 +143,13 @@ export default class TaskTracker {
 
   createTask(task) {
     let newTask = document.createElement("li");
-    newTask.classList.add("list-group-item", "d-flex", "w-100", "mb-2");
+    newTask.classList.add(
+      "list-group-item",
+      "d-flex",
+      "w-100",
+      "mb-2",
+      "tasks__item"
+    );
 
     let color = "green";
     if (task.priority == "Medium") color = "#FFBC2D";
@@ -189,7 +195,7 @@ export default class TaskTracker {
 
     taskMenuButton.innerHTML = `
                 <button
-                  class="btn btn-secondary h-100"
+                  class="btn btn-secondary h-100 id"
                   type="button"
                   id="${task.id}"
                   data-toggle="dropdown"
@@ -313,4 +319,32 @@ export default class TaskTracker {
     }
   }
 
+  changeStatus(id, complete) {
+    for (const key in this.tasks) {
+      if (this.tasks[key].id == id) {
+        complete
+          ? (this.tasks[key].status = true)
+          : (this.tasks[key].status = false);
+        break;
+      }
+    }
+    let tasksData = JSON.stringify(this.tasks);
+    localStorage.setItem("tasks", tasksData);
+  }
+
+  changeData() {
+    let elements = document.querySelectorAll(`.tasks__item`);
+    let newTasks = [];
+
+    for (const element of elements) {
+      let id = element.querySelector(".id").id;
+
+      for (const task of this.tasks) {
+        if (task.id == id) newTasks.push(task);
+      }
+    }
+
+    let tasksData = JSON.stringify(newTasks);
+    localStorage.setItem("tasks", tasksData);
+  }
 }

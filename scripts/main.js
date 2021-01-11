@@ -62,3 +62,93 @@ document.querySelector("#addTaskButton").onclick = function () {
   taskTracker.clearForm();
 }
 
+// Drag and Drop
+
+const tasksListElement = document.querySelector(`#currentTasks`);
+const completeListElement = document.querySelector(`#completedTasks`);
+let taskElements = document.querySelectorAll(`.tasks__item`);
+
+for (const task of taskElements) {
+  task.draggable = true;
+}
+
+
+tasksListElement.addEventListener(`dragstart`, (evt) => {
+  evt.target.classList.add(`selected`);
+});
+completeListElement.addEventListener(`dragstart`, (evt) => {
+  evt.target.classList.add(`selected`);
+});
+
+
+tasksListElement.addEventListener(`dragend`, (evt) => {
+  let activeElement = document.querySelector(`.selected`);
+  let activeID = activeElement.querySelector(".id").id;
+
+  evt.target.classList.remove(`selected`);
+
+  activeElement.querySelector(".btn-success").style.display = "";
+  activeElement.querySelector(".btn-info").style.display = "";
+
+  taskTracker.changeStatus(activeID, false);
+  taskTracker.changeData();
+});
+
+completeListElement.addEventListener(`dragend`, (evt) => {
+  let activeElement = document.querySelector(`.selected`);
+  let activeID = activeElement.querySelector(".id").id;
+
+  evt.target.classList.remove(`selected`);
+
+  activeElement.querySelector(".btn-success").style.display = "none";
+  activeElement.querySelector(".btn-info").style.display = "none";
+
+  taskTracker.changeStatus(activeID, true);
+  taskTracker.changeData();
+});
+
+
+tasksListElement.addEventListener(`dragover`, (evt) => {
+  evt.preventDefault();
+
+  const activeElement = document.querySelector(`.selected`);
+  const currentElement = evt.target;
+
+  const isMoveable =
+    activeElement !== currentElement &&
+    currentElement.classList.contains(`tasks__item`);
+
+  if (!isMoveable) {
+    return;
+  }
+
+  const nextElement =
+    currentElement === activeElement.nextElementSibling
+      ? currentElement.nextElementSibling
+      : currentElement;
+
+  tasksListElement.insertBefore(activeElement, nextElement);
+});
+
+completeListElement.addEventListener(`dragover`, (evt) => {
+  evt.preventDefault();
+
+  const activeElement = document.querySelector(`.selected`);
+  const currentElement = evt.target;
+
+  const isMoveable =
+    activeElement !== currentElement &&
+    currentElement.classList.contains(`tasks__item`);
+
+  if (!isMoveable) {
+    return;
+  }
+
+  const nextElement =
+    currentElement === activeElement.nextElementSibling
+      ? currentElement.nextElementSibling
+      : currentElement;
+
+  completeListElement.insertBefore(activeElement, nextElement);
+});
+
