@@ -56,7 +56,7 @@ export default class TaskTracker {
       document.querySelector("h1").innerHTML = "Мой список задач";
       document.querySelector("#addTaskButton").innerHTML = `<i class="fas fa-plus"></i>
             Новая Задача`;
-      document.querySelector("#todo").innerHTML = `Сделать (${this.currentCount})`;
+      document.querySelector("#todo").innerHTML = `Текущие (${this.currentCount})`;
       document.querySelector("#completed").innerHTML = `Выполненные (${this.completedCount})`;
 
       let tasksPriority = document.querySelectorAll("#tasksPriority");
@@ -322,12 +322,32 @@ export default class TaskTracker {
   changeStatus(id, complete) {
     for (const key in this.tasks) {
       if (this.tasks[key].id == id) {
-        complete
-          ? (this.tasks[key].status = true)
-          : (this.tasks[key].status = false);
+        let status = this.tasks[key].status;
+
+        if (complete == true && status == false) {
+          this.tasks[key].status = true;
+          this.currentCount--;
+          this.completedCount++;
+        } else if (complete == false && status == true) {
+          this.tasks[key].status = false;
+          this.currentCount++;
+          this.completedCount--;
+        }
+
         break;
       }
     }
+
+    let lang = localStorage.getItem("lang");
+
+    if (lang == "ru") {
+      document.querySelector("#todo").innerHTML = `Текущие (${this.currentCount})`;
+      document.querySelector("#completed").innerHTML = `Выполненные (${this.completedCount})`;
+    } else {
+      document.querySelector("#todo").innerHTML = `ToDo (${this.currentCount})`;
+      document.querySelector("#completed").innerHTML = `Completed (${this.completedCount})`;
+    }
+
     let tasksData = JSON.stringify(this.tasks);
     localStorage.setItem("tasks", tasksData);
   }
