@@ -152,3 +152,10 @@ completeListElement.addEventListener(`dragover`, (evt) => {
   completeListElement.insertBefore(activeElement, nextElement);
 });
 
+document.querySelector("#todo").addEventListener('dragover', (evt) => {
+  tasksListElement.append(document.querySelector(`.selected`));
+});
+
+document.querySelector("#completed").addEventListener("dragover", (evt) => {
+  completeListElement.append(document.querySelector(`.selected`));
+});
